@@ -1,6 +1,7 @@
 import React from 'react';
-import BubblePage from '../components/BubblePage';import {render} from '@testing-library/react';
-import userEvent from "@testing-library/user-event";
+import BubblePage from './BubblePage';
+import {render, screen} from '@testing-library/react';
+
 
 
 
@@ -32,15 +33,15 @@ const colorData =  [
       hex: '#7fffd4'
     },
     id: 4
-  },
+  }
 ];
 
 jest.mock(mockGetColors())
 test("Fetches data and renders the bubbles", async () => {
 
   mockGetColors(colorData)
-  const { getByText } = render(<BubblePage />);
-  const colors = getByText(/colors/i);
+    const { rerender } = render(<BubblePage />);
+    const colors = screen.queryAllByTestId(/colors/i);
   expect(colors).toBeInTheDocument();
 
   const bubbles = getByText(/bubbles/i);
